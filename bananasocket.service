@@ -1,0 +1,17 @@
+$ cat /etc/systemd/system/bananasocket.service
+[Unit]
+Description=Banana TCP Socket Service
+After=network-online.target
+Wants=network-online.target systemd-networkd-wait-online.service
+
+StartLimitIntervalSec=500
+StartLimitBurst=5
+
+[Service]
+Restart=on-failure
+RestartSec=5s
+
+ExecStart=/bin/bash /usr/local/bin/bananascript.sh
+
+[Install]
+WantedBy=multi-user.target
